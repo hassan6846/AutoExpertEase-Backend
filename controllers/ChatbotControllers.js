@@ -3,8 +3,8 @@ const { OpenAI, } = require("openai");
 
 //config open ai
 const openai = new OpenAI({
-    apiKey:"1RhWaXkJT4tMRGwkzpbUT3BlbkFJ8NnrKthDmAHKSRpvFk34",
-    organization: 'org-7lFdfyXdBpVv2AxrIm7ZWfuW',
+    apiKey:"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",
+
 
 });
 
