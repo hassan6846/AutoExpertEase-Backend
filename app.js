@@ -20,8 +20,9 @@ app.use(express.json())//server is json type.
 
 ///Routes
 const chatbot=require("./routes/Chatbot")
-///Endpoints
 
+
+///Endpoints
 app.use('/api',chatbot) //chatbot
 
 
