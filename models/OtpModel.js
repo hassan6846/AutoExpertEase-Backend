@@ -1,6 +1,5 @@
 const mongoose = require("mongoose");
 const axios = require("axios");
-const { sendOtpPhone } = require("../utils/SendPhoneOtp");
 
 const OtpSchema = new mongoose.Schema({
     phone: {
@@ -20,13 +19,7 @@ const OtpSchema = new mongoose.Schema({
 
 
 OtpSchema.pre("save", async function (next) {
-    console.log("New Document is saved to the database");
-    console.log("isNew flag:", this.isNew); // Log the isNew flag for debugging
-    if (this.isNew) {
-        console.log("Calling sendOtpPhone...");
-        await sendOtpPhone(this.phone, this.otp);
-    }
-    next();
+
 });
 
 

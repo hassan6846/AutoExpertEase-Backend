@@ -1,9 +1,8 @@
 const { default: axios } = require("axios");
 const OtpGenerator=require("otp-generator")
 
-const sendOtpPhone= async(phone) =>{
-    const otp = Math.floor(1000 + Math.random() * 9000); // Generates a 4-digit OTP
-    console.log(otp)
+const sendOtpPhone= async(phone,otp) =>{
+ 
     try {
         const response = await axios.post("https://api.veevotech.com/v3/sendsms", {
             "apikey": "d593a1cfd2e75e1e08e292b45e2df894",

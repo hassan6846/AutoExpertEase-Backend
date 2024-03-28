@@ -4,7 +4,7 @@ const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
 const User = require("../models/UserModel");
 const OTP = require("../models/OtpModel");
-const GenOtp = require("otp-generator")
+const { sendOtpPhone } = require("../utils/SendPhoneOtp");
 
 
 
@@ -31,7 +31,7 @@ const Login = async (req, res, next) => {
         res.json({
             success: true,
             message: "Login Successfull",
-            token:"Token"
+            token: "Token"
         })
     }
     catch (err) {
@@ -44,72 +44,16 @@ const Login = async (req, res, next) => {
 
 }
 const Register = async (req, res, next) => {
+    const {name,email,password, phone, otp } = req.body
     try {
-        const { name, password, email, phone, otp, deviceName } = req.body;
 
-        // Check if any required field is missing
-        if (!name || !password || !email || !phone || !otp) {
-            return res.status(400).json({
-                success: false,
-                message: "Please fill all fields",
-            });
-        }
+    }
 
-        // Validate email format
-        if (!validator.isEmail(email)) {
-            return res.status(400).json({
-                success: false,
-                message: "Invalid Email",
-            });
-        }
-
-        // Validate phone number format
-        if (!validator.isNumeric(phone)) {
-            return res.status(400).json({
-                success: false,
-                message: "Invalid Phone Number",
-            });
-        }
-
-        // Check if phone number is already associated with another account
-        const existingUser = await User.findOne({ phone });
-        if (existingUser) {
-            return res.status(400).json({
-                success: false,
-                message: "Phone is Already Associated With Another account",
-            });
-        }
-
-        // Check if OTP is correct
-        const existingOTP = await OTP.findOne({ phone });
-        if (!existingOTP || existingOTP.otp !== otp) {
-            return res.status(400).json({
-                success: false,
-                message: "Invalid OTP",
-            });
-        }
-
-        // Create the user
-        const newUser = await User.create({
-            name,
-            password,
-            email,
-            phone,
-            otp,
-            deviceName,
-        });
-        
-        return res.status(200).json({
-            success: true,
-            message: "User Created Successfully",
-            user: newUser, // Optionally return the created user data
-        });
-
-    } catch (error) {
-        console.error("Error while registering:", error);
-        return res.status(500).json({
+    catch (error) {
+        console.log(error)
+        res.status(500).json({
             success: false,
-            message: "Error while registering",
+            message: "Error While Registering",
         });
     }
 };
@@ -122,9 +66,12 @@ const SendOtp = async (req, res, next) => {
     try {
         //save otp in to the model and it will be expire after 5 min or 10
         await OTP.create({ phone: phone, otp: GenOtp })
+
+        sendOtpPhone(phone, GenOtp)
         return res.status(200).json({
             success: true,
-            message: "OTP sent successfully",
+            message: `This otp is${GenOtp}`,
+
         });
     } catch (error) {
         console.log(error)
