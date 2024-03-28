@@ -23,10 +23,11 @@ app.use(express.json())//server is json type.
 
 ///Routes
 const chatbot=require("./routes/Chatbot")
-const auth=require("./routes/AuthRoutes")
+const auth=require("./routes/AuthRoutes");
+
 
 ///Endpoints
 app.use('/api',chatbot) //chatbot
-app.use('api',auth)
+app.use('/api',auth)
 
 module.exports=app

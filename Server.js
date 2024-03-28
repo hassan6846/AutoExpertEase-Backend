@@ -1,7 +1,9 @@
 const app = require("./app");//entry
+const { ConnectMongodb } = require("./db/ConnectionDb");
 
 
-
+//connect Db
+ConnectMongodb()
 
 
 

@@ -1,7 +1,8 @@
-const mongoose = require("mongoose")
+const mongoose = require("mongoose");
+const axios = require("axios");
+const { sendOtpPhone } = require("../utils/SendPhoneOtp");
 
 const OtpSchema = new mongoose.Schema({
-
     phone: {
         type: Number,
         required: true,
@@ -13,26 +14,20 @@ const OtpSchema = new mongoose.Schema({
     createdAt: {
         type: Date,
         default: Date.now,
-        expires: 60 * 5//document will automatically deleted after 5min
+        expires: 10 // Document will automatically be deleted after 5 minutes
     }
-})
-async function sendOtpPhone(phone, otp) {
-    try {
-        const response=await axios.post("https://api.veevotech.com/v3/sendsms",{
-            "apikey": "d593a1cfd2e75e1e08e292b45e2df894",
-            "receivernum": phone,
-            "sendernum": "Default",
-            "textmessage": `The otp Key for AutoExpertEase is${otp}`
-        })
-    } catch (error) {
-        console.log(error.message)
+},{timestamps:true,expireAfterSeconds:60*5});
+
+
+OtpSchema.pre("save", async function (next) {
+    console.log("New Document is saved to the database");
+    console.log("isNew flag:", this.isNew); // Log the isNew flag for debugging
+    if (this.isNew) {
+        console.log("Calling sendOtpPhone...");
+        await sendOtpPhone(this.phone, this.otp);
     }
-}
-OtpSchema.pre("save",async function (next){
-    console.log("New Document is saved to database")
-    if(this.isNew){
-        await sendOtpPhone(this.phone,this.otp)
-    }
-    next()
-})
-module.exports=mongoose.model("OTP",OtpSchema)
+    next();
+});
+
+
+module.exports=OTP=mongoose.model("otp",OtpSchema)
