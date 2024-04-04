@@ -43,10 +43,41 @@ const Login = async (req, res, next) => {
     }
 
 }
-const Register = async (req, res, next) => {
-    const {name,email,password, phone, otp } = req.body
-    try {
 
+
+
+
+/////////////////////////////////////////////////////////////////////////
+const Register = async (req, res, next) => {
+
+    const { email, emailotp } = req.body;
+
+    //check if all field are entered or not
+    if (!email || !emailotp) {
+
+        return res.status(400).json({ error: "Please Enter All Required field" });
+
+    }
+
+    try {
+        //check if user already existed or not..
+
+        //find most recent otp (from otp model)
+        const response = await OTP.find({ email }).sort({ createdAt: -1 }).limit(1);
+        console.log(response)
+        if (response.length === 0) {
+			// OTP not found for the email
+			return res.status(400).json({
+				success: false,
+				message: "The OTP is not valid",
+			});
+		} else if (otp !== response[0].otp) {
+			// Invalid OTP
+			return res.status(400).json({
+				success: false,
+				message: "The OTP is not valid",
+			});
+		}
     }
 
     catch (error) {
@@ -58,9 +89,10 @@ const Register = async (req, res, next) => {
     }
 };
 
-//SendOtp
+/////////////////////////////////////////////////////////////////////////
 const SendOtp = async (req, res, next) => {
-    const { phone } = req.body;
+
+    const { email } = req.body;
     const GenOtp = Math.floor(1000 + Math.random() * 9000); // Generates a 4-digit OTP
 
     try {
