@@ -97,8 +97,8 @@ const SendOtp = async (req, res, next) => {
 
     try {
         //save otp in to the model and it will be expire after 5 min or 10
-        await OTP.create({ phone: phone, otp: GenOtp })
-
+        await OTP.create({email:email,EmailOtp:GenOtp })
+ 
         sendOtpPhone(phone, GenOtp)
         return res.status(200).json({
             success: true,

@@ -5,11 +5,11 @@ const mailSender = require("../utils/SendMail");
 const OtpSchema = new mongoose.Schema({
     phone: {
         type: Number,
-    
+
     },
     otp: {
         type: Number,
-    
+
     },
     email: {
         type: Number,
@@ -29,17 +29,17 @@ const OtpSchema = new mongoose.Schema({
 //define function to send otp
 async function sendVerficationEmail(email, EmailOtp) {
     try {
-        const mailResponse = await mailSender(email,EmailOtp)
-        console.log("Email Sent sucessfully",mailResponse)
+        const mailResponse = await mailSender(email, EmailOtp)
+        console.log("Email Sent sucessfully", mailResponse)
     } catch (error) {
 
-    }     console.log(error)
+    } console.log(error)
 }
 
 OtpSchema.pre("save", async function (next) {
-//only send if new document is created 
-    if(this.isNew){
-        await sendVerficationEmail(this.email,this.EmailOtp)
+    //only send if new document is created 
+    if (this.isNew) {
+        await sendVerficationEmail(this.email, this.EmailOtp)
     }
     next()
 });
