@@ -1,9 +1,9 @@
 const express = require('express')
 const router = express.Router()//router for nested routes
+//controllers
+const { SendEmailOtp,VerifyEmail} = require('../controllers/AuthControllers')
 
-const {SendOtp,Login, Register } = require('../controllers/UserControllers')
+router.route('/sendemail').post(SendEmailOtp)
+router.route('/verifyemail').post(VerifyEmail)
 
-router.route('/login').post(Login)
-router.route('/register').post(Register)
-router.route('/sendotp').post(SendOtp)
-module.exports=router
+module.exports = router;

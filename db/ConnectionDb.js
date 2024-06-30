@@ -2,7 +2,7 @@ const mongoose = require("mongoose");
 //main DBConnnect Function..
 async function ConnectMongodb() {
   try {
-    await mongoose.connect('mongodb://127.0.0.1:27017/test', {
+    await mongoose.connect(process.env.CONNECTION_STRING_MONGO, {
       // We'll Add database configs here in the future....
 
 

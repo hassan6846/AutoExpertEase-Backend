@@ -2,12 +2,19 @@ const mongoose = require("mongoose")
 const validator = require("validator")
 const bcrypt = require("bcrypt")
 const UserSchema = new mongoose.Schema({
-    // userName
-    username: {
+    // userName (for Kyc purposes E.g Real Cnic Name )
+
+    firstName: {
         type: String,
         require: [true, "Kindly Enter your Name"],
         maxLength: [30, "Name cannot exceed 30 characters"],//setting max length
-        minLength: [4, "Name should have more than 4 characters"],//setting min length
+        minLength: [2, "Name should have more than 4 characters"],//setting min length
+    },
+    lastName: {
+        type: String,
+        require: [true, "Kindly Enter your Name"],
+        maxLength: [30, "Name cannot exceed 30 characters"],//setting max length
+        minLength: [2, "Name should have more than 4 characters"],//setting min length
     },
     email: {
         type: String, //email type 
@@ -15,107 +22,60 @@ const UserSchema = new mongoose.Schema({
         unique: [true, "Email is already Linked to another account."],//prevent duplciate email
         validate: [validator.isEmail, "Please Enter a valid Email Format."],//Validating is Email.
     },
+    phone: {
+        type: String,
+        required: [true, "Kindly Enter the Contact Number"],
+
+    },
     password: {
         type: String,
+        minLength: [8, "Password Should have more than 8 characters"],//setting min length
+
     },
     avatar: {
         type: String,
         required: false,
         default: "https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_1280.png"
     },
-    // User Infomation.
-    //     
-    //    --Contians User Cnic
-    // --Contains Very contagius information.
-    UserInfo: {
-        // Only for cnic purpose.
-        name: {
+
+    AddressInfo: {
+        //Address
+        Address: {
             type: String,
-            required: false,
+            default: "Address for billing and parcel",
         },
-        //cnic
-        Cnic: {
-            // Image
-            Image: {
-                type: String,
-                required: false,
-            }
-            //  Other Ml Releated Data.
+        //Country..
+        Country: {
+            type: String,
+            default: "Pakistan",
         },
-        //Image
-        FacialData: {
-            //Face Id Each user is assigned a special FacialId
-            //So we can run the face detection and gives us the same id.
-            FaceId: {
-                type: String,
-                required: false,
-            },
-            // Image 
-
-            Image: {
-                type: String,
-                required: false,
-                default: null,
-
-            },
-            FacialFeatures: {
-                type: Array,
-                required: false,
-                default: null
-            },
-
-
+        //City..
+        City: {
+            type: String,
+            default: "Lahore"
         },
-
-        //User Permenent Address. According to cnic.
-        AddressInfo: {
-            //Country..
-            Country: {
-                type: String,
-                default: "Pakistan",
-            },
-            //City..
-            City: {
-                type: String,
-                default: "Lahore"
-            },
-            State: {
-                type: String,
-                default: "Punjab"
-            },
-            //ZipCode.
-            ZipCode: {
-                type: Number,
-                default: 54000,
-            }
+        State: {
+            type: String,
+            default: "Punjab"
         },
-        // Contain Info About Device Info of the User Device which is primarly used
-        //We can Write Algorithms to compare device with new auth device and warn them
-        //about suspecius activity.
-        DeviceInfo: {
-            // Device ID
-            DeviceId: {},
-            // Brand
-            Brand: {},
-            //DeviceName.
-            DeviceName: {},
-            //    Device Type
-            DeviceType: {},
-            ModelName: {}
-        },
-
-
-    },
-    //  Phone Number Field.
-    phone: {
-        type: Number,
-        required: [true, "Kindly Enter the Contact Number"],
-        validate: {
-            validator: function (value) {
-                return String(value).length === 11;
-            },
-            message: "Phone number must be exactly 10 digits",
+        //ZipCode.
+        ZipCode: {
+            type: Number,
+            default: 54000,
         }
+    },
+    // Contain Info About Device Info of the User Device which is primarly used
+    //We can Write Algorithms to compare device with new auth device and warn them
+    //about suspecius activity.
+
+
+
+
+    DeviceInfo: {
+
+        Brand: { type: String, default: "Unknown" },
+        DeviceName: { type: String, default: "Unknown" },
+
     },
 
     isVerifiedEmail: {
@@ -124,48 +84,24 @@ const UserSchema = new mongoose.Schema({
     },
     // UserRoles.
     role: {
-        type: String,
-        enum: ['Admin', 'Seller', 'Worker']
+        type: [String],
+        default: ["user"],
     },
     //we ill set this after putting this
     rolestatus: {
         type: String,
         default: "Pending",
     },
-
-    Locations: {
-        // User TypeLocation
-        UserLocation: {
-            default: null,
-            type: String,
-        },
-        // Mutate location.
-        BuisnessLocation: {},
-        // Link a database Ref.
-        RealtimeLocation: {}
+    fatherName: {
+        type: String,
+        default: "",
     },
-    // Handle User Tokens For Sessions.
-    emailotp: {
-        type: Number,
-        required: false
-    },
-    // User Create at date.
     createdAt: {
         type: Date,
-        default: Date.now()
-    },
-    otp: {
-        type: Number,
-        maxLength: [5, "otp cannot exceed 5 characters"],//setting max length
-        minLength: [4, "otp should have more than 4 characters"],//setting min length
-        required: false,
-
-
-
+        default: Date.now(),
     }
-    //timestamps true
 
-})
+}, { timestamps: true })
 //setting index
 
 //hash password before saving it....

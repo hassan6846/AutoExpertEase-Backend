@@ -1,13 +1,8 @@
 const express=require("express")
 const router=express.Router()
+//controllers
+const { ChatBot } = require("../controllers/ChatbotControllers")
 
-///Controllers
-const {ChatBot}=require("../controllers/ChatbotControllers")
+router.route("/help").post(ChatBot)
 
-router.route('/help').post(ChatBot)
-
-
-
-
-//export
 module.exports=router

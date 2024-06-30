@@ -1,29 +1,30 @@
-const nodemailer = require("nodemailer")
-//transporter
-const mailSender = async (email,otp) => {
+const nodemailer = require("nodemailer");
+
+// SendingOtpMail
+const SendOtpMail = async (email, title, body) => {
     try {
-        //create a transporter
-        let transporter = nodemailer.createTransport({
-            service: "Gmail",
-            port: 587,
-            secure: false, // Use `true` for port 465, `false` for all other ports
-            //admin password etc sender account
+        const transporter = nodemailer.createTransport({
+    
+            service:"gmail",
             auth: {
-                user: "ha6817334@gmail.com",
-                pass: "zjqbnahmxjxvcodt",
-            },
-        })
+                user: 'ha6817334@gmail.com',
+                pass: 'oahs wfgq kjvi ewkq'
+            }
+        });
 
-        //send mail to users
-        let info = await transporter.sendMail({
-            from: "www.autoExpertEase.pk",
+        const mailOptions = {
+            from: 'violette.wolff@ethereal.email',
             to: email,
-            subject: "Otp password",
-            html: `h1>Your One time password iss ${otp}</h1>`
+            subject: title,
+            text: body
+        };
 
-        })
+        await transporter.sendMail(mailOptions);
+        console.log(`Email sent successfully to ${email}`);
     } catch (error) {
-        console.log(error.message)
+        console.error("Error sending email:", error);
+        throw new Error('Failed to send email');
     }
 }
-module.exports = mailSender
+
+module.exports = { SendOtpMail };
