@@ -286,10 +286,10 @@ const DeleteMyTask = async (req, res, next) => {
   }
 };
 const SendOffertoTask = async (req, res, next) => {
-  const { taskid, price, coordinates, time, distance } = req.body;
+  const { taskid, price, coordinates, time, distance,userid} = req.body;
 
   // Check if any required fields are missing
-  if (!taskid || !price || !coordinates || !time || !distance) {
+  if (!taskid || !price || !coordinates || !time || !distance||!userid) {
     return res.status(400).json({
       success: false,
       msg: "Missing required fields: taskid, price, coordinates, time, distance",
@@ -305,12 +305,16 @@ const SendOffertoTask = async (req, res, next) => {
         msg: "Task not found.",
       });
     }
-
-    // Assuming you have a logged in user and can get userid from session or token
-    const userid = req.user.id; // Adjust this according to how you manage user sessions or tokens
-
+const findUserAvatar=await User.findById({_id:userid})
+    if(!findUserAvatar){
+      return res.status(404).json({
+        success: false,
+        msg: "User not found.",
+      });
+    }
     // Create a new Offer object
     const offer = new Offer({
+      Avatar:findUserAvatar.avatar,
       taskid,
       userid,
       price,

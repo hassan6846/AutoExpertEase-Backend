@@ -19,8 +19,13 @@ const LocationSchema = new mongoose.Schema({
     createdAt: {
         type: Date,
         default: Date.now(),
-    }
-
+    },
+    isArrived:{
+        type: Boolean,
+        default: false,
+        required: true,
+    },
+    
 }, { timestamps: true })
 
 const Location = mongoose.model("location", LocationSchema);
