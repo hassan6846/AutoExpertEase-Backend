@@ -45,7 +45,7 @@ const TaskSchema = new mongoose.Schema({
         default: false
     },
     AcceptedBy: {
-        type: String,
+        type: mongoose.Schema.ObjectId,
         default: null
     },
     finalPrice:{
