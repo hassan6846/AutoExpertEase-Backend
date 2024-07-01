@@ -238,6 +238,7 @@ const PostTask = async (req, res, next) => {
       success: true,
       msg: "Successfully Posted Task.",
       task,
+      taskid:task._id,
     });
   } catch (error) {
     console.error(error);
