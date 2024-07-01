@@ -286,10 +286,10 @@ const DeleteMyTask = async (req, res, next) => {
   }
 };
 const SendOffertoTask = async (req, res, next) => {
-  const { taskid, price, coordinates, time, distance,userid} = req.body;
+  const { taskid, price, coordinates, time, distance, userid } = req.body;
 
   // Check if any required fields are missing
-  if (!taskid || !price || !coordinates || !time || !distance||!userid) {
+  if (!taskid || !price || !coordinates || !time || !distance || !userid) {
     return res.status(400).json({
       success: false,
       msg: "Missing required fields: taskid, price, coordinates, time, distance",
@@ -305,8 +305,8 @@ const SendOffertoTask = async (req, res, next) => {
         msg: "Task not found.",
       });
     }
-const findUserAvatar=await User.findById({_id:userid})
-    if(!findUserAvatar){
+    const findUserAvatar = await User.findById({ _id: userid });
+    if (!findUserAvatar) {
       return res.status(404).json({
         success: false,
         msg: "User not found.",
@@ -314,7 +314,7 @@ const findUserAvatar=await User.findById({_id:userid})
     }
     // Create a new Offer object
     const offer = new Offer({
-      Avatar:findUserAvatar.avatar,
+      Avatar: findUserAvatar.avatar,
       taskid,
       userid,
       price,
@@ -343,7 +343,7 @@ const findUserAvatar=await User.findById({_id:userid})
 const GetTaskbyId = async (req, res, next) => {
   const { id } = req.params;
   try {
-    const findTask=await Task.findById(id)
+    const findTask = await Task.findById(id);
     res.status(201).json({
       success: true,
       task: findTask,
