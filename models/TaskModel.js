@@ -46,6 +46,7 @@ const TaskSchema = new mongoose.Schema({
     },
     AcceptedBy: {
         type: mongoose.Schema.ObjectId,
+        ref:"Expert",
         default: null
     },
     finalPrice:{
@@ -55,6 +56,9 @@ const TaskSchema = new mongoose.Schema({
     isTaskActive:{
         type: Boolean,
         default:true
+    },
+    offers:{
+        
     }
 },{timestamps: true});
 const Task = mongoose.model("Task", TaskSchema);

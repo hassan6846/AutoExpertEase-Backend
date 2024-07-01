@@ -286,4 +286,13 @@ const DeleteMyTask=async(req,res,next)=>{
     });
   }
 }
+const SendOffertoTask=async (req,res,next)=>{
+
+}
+const GetTaskOffers=async(req,res,next)=>{
+  const {id}=req.params
+}
+const CreateTask=async(req,res,next)=>{
+  
+}
 module.exports = { ApplyExpertShip, GetTopup, PostTask, AddTopup,GetAllTasks,DeleteMyTask };
