@@ -1,7 +1,7 @@
 const Expert = require("../models/ExpertModel");
 const Task = require("../models/TaskModel");
 const User = require("../models/UserModel");
-
+const Offer = require("../models/OfferModel");
 const cloudinaryInstance = require("../utils/Cloudinary");
 
 //Apply Being Expert
@@ -228,17 +228,16 @@ const PostTask = async (req, res, next) => {
         Latitude: latitude,
         Longitude: longitude,
       },
-      image:[uploadedImage1,uploadedImage2],
-      NearbyPlace:county,
-      Postedby:id,
-
+      image: [uploadedImage1, uploadedImage2],
+      NearbyPlace: county,
+      Postedby: id,
     });
-    await task.save()
+    await task.save();
     res.status(201).json({
       success: true,
       msg: "Successfully Posted Task.",
       task,
-      taskid:task._id,
+      taskid: task._id,
     });
   } catch (error) {
     console.error(error);
@@ -249,26 +248,26 @@ const PostTask = async (req, res, next) => {
   }
 };
 
-const GetAllTasks=async(req,res,next)=>{
-  try{
-  const tasks=await Task.find()
-  res.status(200).json({
-    tasks:tasks
-  })
-  }catch(err){
+const GetAllTasks = async (req, res, next) => {
+  try {
+    const tasks = await Task.find();
+    res.status(200).json({
+      tasks: tasks,
+    });
+  } catch (err) {
     console.error(err);
     res.status(500).json({
       success: false,
       msg: "Internal Server Error",
     });
   }
-}
+};
 
-const DeleteMyTask=async(req,res,next)=>{
-  const {id}=req.params
-  try{
-    const task=await Task.findOneAndDelete({_id:id})
-    if(!task){
+const DeleteMyTask = async (req, res, next) => {
+  const { id } = req.params;
+  try {
+    const task = await Task.findOneAndDelete({ _id: id });
+    if (!task) {
       return res.status(404).json({
         success: false,
         msg: "Task not found.",
@@ -278,21 +277,75 @@ const DeleteMyTask=async(req,res,next)=>{
       success: true,
       msg: "Successfully Deleted Task.",
     });
-  }catch(err){
+  } catch (err) {
     console.error(err);
     res.status(500).json({
       success: false,
       msg: "Internal Server Error",
     });
   }
-}
-const SendOffertoTask=async (req,res,next)=>{
-
-}
-const GetTaskOffers=async(req,res,next)=>{
-  const {id}=req.params
-}
-const CreateTask=async(req,res,next)=>{
+};
+const SendOffertoTask = async (req, res, next) => {
+  const { taskid, price, coordinates, time, distance } = req.body;
   
-}
-module.exports = { ApplyExpertShip, GetTopup, PostTask, AddTopup,GetAllTasks,DeleteMyTask };
+  // Check if any required fields are missing
+  if (!taskid || !price || !coordinates || !time || !distance) {
+    return res.status(400).json({
+      success: false,
+      msg: "Missing required fields: taskid, price, coordinates, time, distance",
+    });
+  }
+  
+  try {
+    // Find the task based on taskid
+    const task = await Task.findOne({ _id: taskid });
+    if (!task) {
+      return res.status(404).json({
+        success: false,
+        msg: "Task not found.",
+      });
+    }
+
+    // Assuming you have a logged in user and can get userid from session or token
+    const userid = req.user.id; // Adjust this according to how you manage user sessions or tokens
+
+    // Create a new Offer object
+    const offer = new Offer({
+      taskid,
+      userid,
+      price,
+      time,
+      distance,
+      coordinates,
+    });
+
+    // Save the offer to the database
+    await offer.save();
+
+    res.status(201).json({
+      success: true,
+      msg: "Successfully Posted Offer.",
+      offer,
+    });
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({
+      success: false,
+      msg: "Internal Server Error",
+    });
+  }
+};
+
+const GetTaskOffers = async (req, res, next) => {
+  const { id } = req.params;
+};
+const CreateTask = async (req, res, next) => {};
+module.exports = {
+  ApplyExpertShip,
+  GetTopup,
+  PostTask,
+  AddTopup,
+  GetAllTasks,
+  DeleteMyTask,
+  SendOffertoTask
+};
