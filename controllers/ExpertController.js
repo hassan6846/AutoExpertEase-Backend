@@ -287,7 +287,7 @@ const DeleteMyTask = async (req, res, next) => {
 };
 const SendOffertoTask = async (req, res, next) => {
   const { taskid, price, coordinates, time, distance } = req.body;
-  
+
   // Check if any required fields are missing
   if (!taskid || !price || !coordinates || !time || !distance) {
     return res.status(400).json({
@@ -295,7 +295,7 @@ const SendOffertoTask = async (req, res, next) => {
       msg: "Missing required fields: taskid, price, coordinates, time, distance",
     });
   }
-  
+
   try {
     // Find the task based on taskid
     const task = await Task.findOne({ _id: taskid });
@@ -336,16 +336,29 @@ const SendOffertoTask = async (req, res, next) => {
   }
 };
 
-const GetTaskOffers = async (req, res, next) => {
+const GetTaskbyId = async (req, res, next) => {
   const { id } = req.params;
+  try {
+    const findTask=await Task.findById(id)
+    res.status(201).json({
+      success: true,
+      task: findTask,
+    });
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({
+      success: false,
+      msg: "Internal Server Error",
+    });
+  }
 };
-const CreateTask = async (req, res, next) => {};
 module.exports = {
   ApplyExpertShip,
   GetTopup,
   PostTask,
   AddTopup,
   GetAllTasks,
+  GetTaskbyId,
   DeleteMyTask,
-  SendOffertoTask
+  SendOffertoTask,
 };

@@ -7,6 +7,7 @@ const OfferSchema = new mongoose.Schema({
     required: true,
   },
   userid: {
+   //Expert id to query.../
     type: mongoose.Schema.Types.ObjectId,
     ref: "User",
     required: true,
