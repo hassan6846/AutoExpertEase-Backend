@@ -264,4 +264,26 @@ const GetAllTasks=async(req,res,next)=>{
   }
 }
 
-module.exports = { ApplyExpertShip, GetTopup, PostTask, AddTopup,GetAllTasks };
+const DeleteMyTask=async(req,res,next)=>{
+  const {id}=req.params
+  try{
+    const task=await Task.findOneAndDelete({_id:id})
+    if(!task){
+      return res.status(404).json({
+        success: false,
+        msg: "Task not found.",
+      });
+    }
+    res.status(200).json({
+      success: true,
+      msg: "Successfully Deleted Task.",
+    });
+  }catch(err){
+    console.error(err);
+    res.status(500).json({
+      success: false,
+      msg: "Internal Server Error",
+    });
+  }
+}
+module.exports = { ApplyExpertShip, GetTopup, PostTask, AddTopup,GetAllTasks,DeleteMyTask };
