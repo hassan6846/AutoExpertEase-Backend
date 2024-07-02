@@ -49,11 +49,14 @@ const VerifyEmail = async (req, res, next) => {
             return res.status(404).json({ error: "OTP not found" });
         }
 
-        if (!latestOTP.otp === otp) {
+        if (latestOTP.otp === otp) {
             // OTP is valid
      
             return res.status(200).json({ message: "OTP verified successfully" });
-        } 
+        } else {
+            // OTP is invalid
+            return res.status(400).json({ error: "Invalid OTP" });
+        }
     } catch (error) {
         console.error(error);
         res.status(500).json({ error: "Internal Server Error" });

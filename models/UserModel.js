@@ -78,10 +78,7 @@ const UserSchema = new mongoose.Schema({
 
     },
 
-    isVerifiedEmail: {
-        type: Boolean, //IsVerifiedEmail.. (we'll update the status after twilio verification and redirct on this basis if not.)
-        default: false
-    },
+
     // UserRoles.
     role: {
         type: [String],
