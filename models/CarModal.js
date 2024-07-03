@@ -42,7 +42,7 @@ const CarSchema = new mongoose.Schema({
     Milage:{
         type: String,
         required: true,
-        min: 0,
+    
     },
     condition: {
         type: String,
@@ -51,7 +51,7 @@ const CarSchema = new mongoose.Schema({
     seats: {
         type: String,
         required: true,
-        min: 1,
+     
     },
     haveAc: {
         type: Boolean,
