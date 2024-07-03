@@ -86,7 +86,7 @@ const RegisterFunction = async (req, res, next) => {
             firstName: firstname,
             lastName: lastname,
             phone,
-            email,
+            email:email,
             password,
             DeviceInfo: {
                 Brand: brand,
