@@ -1,5 +1,4 @@
 const mongoose = require('mongoose');
-const validator = require('validator');
 
 const CarSchema = new mongoose.Schema({
     name: {
@@ -23,7 +22,7 @@ const CarSchema = new mongoose.Schema({
         default:"undefined",
     },
     Cartype: {
-        type: [String],
+        type: String,
   
         required: true,
     },
@@ -32,7 +31,7 @@ const CarSchema = new mongoose.Schema({
         defualt:"Gasoline Engine"
     },
     fuelType: {
-        type: [String],
+        type: String,
        
         required: true,
     },
@@ -101,12 +100,7 @@ const CarSchema = new mongoose.Schema({
     images: [{
         type: [String],
         required: [true, "Kindly Add Some Images to Preview (minimum limit is 3)"],
-        validate: {
-            validator: function(array) {
-                return array.length >= 1 && array.length <= 9;
-            },
-            message: "Image array should have between 3 and 9 items."
-        }
+
 
     }],
 
