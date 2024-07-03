@@ -36,9 +36,8 @@ const CarSchema = new mongoose.Schema({
         required: true,
     },
     YearOfManufacture: {
-        type: Number,
+        type: String,
         required: true,
-        min: 1886, // Year of the first automobile
     },
     Milage:{
         type: String,
@@ -76,9 +75,8 @@ const CarSchema = new mongoose.Schema({
     },
     
     pricePerDay: {
-        type: Number,
+        type: String,
         required: true,
-        min: 0,
     },
     location: {
         type: Object,
