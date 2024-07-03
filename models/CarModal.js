@@ -41,7 +41,7 @@ const CarSchema = new mongoose.Schema({
         min: 1886, // Year of the first automobile
     },
     Milage:{
-        type: Number,
+        type: String,
         required: true,
         min: 0,
     },
@@ -50,7 +50,7 @@ const CarSchema = new mongoose.Schema({
         trim: true,
     },
     seats: {
-        type: Number,
+        type: String,
         required: true,
         min: 1,
     },
