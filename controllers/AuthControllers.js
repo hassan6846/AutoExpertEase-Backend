@@ -46,7 +46,7 @@ const VerifyEmail = async (req, res, next) => {
         // Find the latest OTP document for the given email
         const latestOTP = await OTP.findOne({ email }).sort({ createdAt: -1 }).exec();
         if (!latestOTP) {
-            return res.status(404).json({ error: "OTP not found" });
+            return res.status(404).json({ message: "OTP not found" });
         }
 
         if (latestOTP.otp === otp) {
@@ -55,11 +55,11 @@ const VerifyEmail = async (req, res, next) => {
             return res.status(200).json({ message: "OTP verified successfully" });
         } else {
             // OTP is invalid
-            return res.status(400).json({ error: "Invalid OTP" });
+            return res.status(400).json({ message: "Invalid OTP" });
         }
     } catch (error) {
         console.error(error);
-        res.status(500).json({ error: "Internal Server Error" });
+        res.status(500).json({ message: "Internal Server Error" });
     }
 }
 module.exports = { SendEmailOtp, VerifyEmail };

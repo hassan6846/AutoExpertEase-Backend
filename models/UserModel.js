@@ -19,8 +19,6 @@ const UserSchema = new mongoose.Schema({
     email: {
         type: String, //email type 
         required: [true, "Please Enter Your Email"],
-        unique: [true, "Email is already Linked to another account."],//prevent duplciate email
-        validate: [validator.isEmail, "Please Enter a valid Email Format."],//Validating is Email.
     },
     phone: {
         type: String,
