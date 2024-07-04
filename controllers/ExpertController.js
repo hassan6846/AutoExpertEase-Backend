@@ -184,24 +184,25 @@ const PostTask = async (req, res, next) => {
   } = req.body;
 
   // Check if any required field is missing
-  if (
-    !title ||
-    !vehciletype ||
-    !description ||
-    !longitude ||
-    !latitude ||
-    !county ||
-    !id ||
-    !imageone ||
-    !imagetwo
-  ) {
-    return res.status(400).json({
-      success: false,
-    });
-  }
+
 
   try {
     // Convert base64 string to buffer and then to Data URI
+    if (
+      !title ||
+      !vehciletype ||
+      !description ||
+      !longitude ||
+      !latitude ||
+      !county ||
+      !id ||
+      !imageone ||
+      !imagetwo
+    ) {
+      return res.status(400).json({
+        success: false,
+      });
+    }
     const base64ToDataURI = (base64String) => {
       const base64Data = base64String.replace(/^data:image\/\w+;base64,/, "");
       const buffer = Buffer.from(base64Data, "base64");
@@ -297,21 +298,7 @@ const SendOffertoTask = async (req, res, next) => {
   }
 
   try {
-    // Find the task based on taskid
-    const task = await Task.findOne({ _id: taskid });
-    if (!task) {
-      return res.status(404).json({
-        success: false,
-        msg: "Task not found.",
-      });
-    }
-    const findUserAvatar = await User.findById({ _id: userid });
-    if (!findUserAvatar) {
-      return res.status(404).json({
-        success: false,
-        msg: "User not found.",
-      });
-    }
+
     // Create a new Offer object
     const offer = new Offer({
       Avatar: findUserAvatar.avatar,

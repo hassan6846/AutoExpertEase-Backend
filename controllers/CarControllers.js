@@ -31,35 +31,38 @@ const UploadCar = async (req, res, next) => {
   } = req.body;
 
   //if request empty
-  if (
-    !id ||
-    !carname ||
-    !noplate ||
-    !registrationno ||
-    !color ||
-    !cartype ||
-    !enginetype ||
-    !fueltype ||
-    !yearofmanufacture ||
-    !milage ||
-    !carcondition ||
-    !seats ||
-    !ac ||
-    !tracker ||
-    !legaldocuments ||
-    !workingsound ||
-    !pickupAddress ||
-    !image ||
-    !imagetwo ||
 
-    !price
-  ) {
-    return res.status(400).json({
-      success: false,
-      msg: "Fill all the fields from upload car",
-    });
-  }
   try {
+    if (
+      !id ||
+      !carname ||
+      !noplate ||
+      !registrationno ||
+      !color ||
+      !cartype ||
+      !enginetype ||
+      !fueltype ||
+      !yearofmanufacture ||
+      !milage ||
+      !carcondition ||
+      !seats ||
+      !ac ||
+      !tracker ||
+      !legaldocuments ||
+      !workingsound ||
+      !pickupAddress ||
+      !image ||
+      !imagetwo ||
+  
+      !price
+    ) {
+      return res.status(400).json({
+        success: false,
+        msg: "Fill all the fields from upload car",
+      });
+    }
+    
+    // Convert base64 images to secure URLs using Cloudinary
     const base64ToDataURI = (base64String) => {
       const base64Data = base64String.replace(/^data:image\/\w+;base64,/, "");
       const buffer = Buffer.from(base64Data, "base64");
