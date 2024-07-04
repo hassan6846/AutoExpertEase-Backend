@@ -251,7 +251,7 @@ const PostTask = async (req, res, next) => {
 
 const GetAllTasks = async (req, res, next) => {
   try {
-    const tasks = await Task.find();
+    const tasks = await Task.find({isTaskActive:true});
     res.status(200).json({
       tasks: tasks,
     });

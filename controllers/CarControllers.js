@@ -6,33 +6,33 @@ const Car = require("../models/CarModal");
 const cloudinaryInstance = require("../utils/Cloudinary");
 
 const UploadCar = async (req, res, next) => {
-  const {
-    id,
-    carname,
-    noplate,
-    registrationno,
-    color,
-    cartype,
-    enginetype,
-    fueltype,
-    yearofmanufacture,
-    milage,
-    carcondition,
-    seats,
-    ac,
-    tracker,
-    legaldocuments,
-    workingsound,
-    pickupAddress,
-    image,
-    imagetwo,
-    usercoords,
-    price,
-  } = req.body;
 
-  //if request empty
 
   try {
+    const {
+      id,
+      carname,
+      noplate,
+      registrationno,
+      color,
+      cartype,
+      enginetype,
+      fueltype,
+      yearofmanufacture,
+      milage,
+      carcondition,
+      seats,
+      ac,
+      tracker,
+      legaldocuments,
+      workingsound,
+      pickupAddress,
+      image,
+      imagetwo,
+      usercoords,
+      price,
+    } = req.body;
+  
     if (
       !id ||
       !carname ||
@@ -117,7 +117,7 @@ const UploadCar = async (req, res, next) => {
 const GetApprovedCars = async (req, res, next) => {
   try {
     // Fetch all users from the database
-    const cars = await Car.find({ IsApproved: true });
+    const cars = await Car.find({ IsApproved: true,availability:true});
     res.status(200).json(cars);
   } catch (error) {
     console.error(error);
@@ -145,6 +145,32 @@ const GetCarById = async (req, res, next) => {
   }
 };
 
-//Book Car..
+//Remove Car After Being booked
+const updateCarStatus=async(req,res,next)=>{
+  const {id}=req.params;
+  //find car
+  try {
+    const FindCar=await Car.findById(id)
+    if(!FindCar){
+      return res.status(404).json({
+        success:false,
+        msg:"Car not found"
+      })
+    }
+    //update status
+    FindCar.availability=false;
+    await FindCar.save();
+    res.status(200).json({
+      success:true,
+      msg:"Car status updated successfully"
+    })
+  } catch (error) {
+    console.log(error)
+    res.status(400).json({
+      sucess:false,
+      msg:"Error from Car Status removal"
+    })
+  }
+}
 
-module.exports = { UploadCar, GetApprovedCars, GetCarById };
+module.exports = { UploadCar, GetApprovedCars, GetCarById ,updateCarStatus};
