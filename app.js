@@ -21,15 +21,15 @@ app.use(express.json()); // Server is JSON type
 app.use(cookieParser());
 app.use(
   bodyParser.json({
-    limit: "50mb",
+    limit: "100mb",
   
   })
 );
 app.use(
   bodyParser.urlencoded({
-    limit: "50mb",
+    limit: "100mb",
     extended: true,
-    parameterLimit:50000000,
+    parameterLimit:50000000000,
     type: "application/json"
   })
 );

@@ -4,13 +4,11 @@ const CarSchema = new mongoose.Schema({
     name: {
         type: String,
         required: true,
-        trim: true,
     },
     licensePlate: {
         type: String,
         required: true,
-        trim: true,
-        unique: true,
+ 
     },
     RegistrationNo:{
         type: String,
@@ -54,24 +52,20 @@ const CarSchema = new mongoose.Schema({
      
     },
     haveAc: {
-        type: Boolean,
+        type: String,
         required: true,
-        default: false,
     },
     hasTraker:{
-        type: Boolean,
+        type: String,
         required: true,
-        default: false,
     },
     WorkingSoundSystem:{
-        type: Boolean,
+        type: String,
         required: true,
-        default: false,
     },
     LegalDocuments:{
-        type: Boolean,
+        type: String,
         required: true,
-        default: false,
     },
     
     pricePerDay: {
@@ -80,7 +74,6 @@ const CarSchema = new mongoose.Schema({
     },
     location: {
         type: Object,
-        required: true,
     },
     Address:{
         type: String,
@@ -102,9 +95,15 @@ const CarSchema = new mongoose.Schema({
 
     }],
 
+    Address:{
+        type:String,
+        required: true,
+    },
 
-
-
+    location:{
+        type: Object,
+        required: true,
+    },
 
     createdAt: {
         type: Date,
