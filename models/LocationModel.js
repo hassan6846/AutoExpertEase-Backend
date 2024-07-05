@@ -2,9 +2,7 @@ const mongoose = require("mongoose")
 
 const LocationSchema = new mongoose.Schema({
     User: {
-
         type: String,
-
     },
     latitude: {
         type: String,

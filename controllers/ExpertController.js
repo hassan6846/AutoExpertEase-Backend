@@ -327,6 +327,24 @@ const SendOffertoTask = async (req, res, next) => {
   }
 };
 
+
+//Get ALl Offers
+const GetAllOffers=async(req,res,next)=>{
+  const {id}=req.params
+  try{
+    const offers = await Offer.find({ taskid: id });
+    res.status(200).json({
+      offers: offers,
+    });
+  }
+  catch (err) {
+    console.error(err);
+    res.status(500).json({
+      success: false,
+      msg: "Internal Server Error",
+    });
+  
+}}
 const GetTaskbyId = async (req, res, next) => {
   const { id } = req.params;
   try {
