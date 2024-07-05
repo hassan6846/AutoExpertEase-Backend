@@ -8,39 +8,34 @@ const CarSchema = new mongoose.Schema({
     licensePlate: {
         type: String,
         required: true,
- 
     },
-    RegistrationNo:{
+    RegistrationNo: {
         type: String,
         required: true,
-    
     },
-    color:{
-        type:String,
-        default:"undefined",
+    color: {
+        type: String,
+        default: "undefined",
     },
     Cartype: {
         type: String,
-  
         required: true,
     },
-    EngineType:{
-        type:String,
-        defualt:"Gasoline Engine"
+    EngineType: {
+        type: String,
+        default: "Gasoline Engine"
     },
     fuelType: {
         type: String,
-       
         required: true,
     },
     YearOfManufacture: {
         type: String,
         required: true,
     },
-    Milage:{
+    Milage: {
         type: String,
         required: true,
-    
     },
     condition: {
         type: String,
@@ -49,38 +44,37 @@ const CarSchema = new mongoose.Schema({
     seats: {
         type: String,
         required: true,
-     
     },
     haveAc: {
         type: String,
         required: true,
     },
-    hasTraker:{
+    hasTraker: {
         type: String,
         required: true,
     },
-    WorkingSoundSystem:{
+    WorkingSoundSystem: {
         type: String,
         required: true,
     },
-    LegalDocuments:{
+    LegalDocuments: {
         type: String,
         required: true,
     },
-    
     pricePerDay: {
         type: String,
         required: true,
     },
     location: {
         type: Object,
+        required: true,
     },
-    Address:{
+    Address: {
         type: String,
         required: true,
     },
     owner: {
-        type:String,
+        type: String,
         required: true,
     },
     availability: {
@@ -91,33 +85,17 @@ const CarSchema = new mongoose.Schema({
     images: [{
         type: [String],
         required: [true, "Kindly Add Some Images to Preview (minimum limit is 3)"],
-
-
     }],
-
-    Address:{
-        type:String,
-        required: true,
-    },
-
-    location:{
-        type: Object,
-        required: true,
-    },
-
     createdAt: {
         type: Date,
         default: Date.now,
     },
-    IsApproved:{
-        type:Boolean,
-        default:true,
+    IsApproved: {
+        type: Boolean,
+        default: true,
     },
-    // Owner details
-    
 });
 
-// Create the model from the schema
 const Car = mongoose.model('Car', CarSchema);
 
 module.exports = Car;
