@@ -146,31 +146,35 @@ const GetCarById = async (req, res, next) => {
 };
 
 //Remove Car After Being booked
-const updateCarStatus=async(req,res,next)=>{
-  const {id}=req.params;
-  //find car
+const updateCarStatus = async (req, res, next) => {
+  const { id } = req.params;
+  
   try {
-    const FindCar=await Car.findById(id)
-    if(!FindCar){
+    // Find the car by ID
+    const FindCar = await Car.findById(id);
+    if (!FindCar) {
       return res.status(404).json({
-        success:false,
-        msg:"Car not found"
-      })
+        success: false,
+        msg: "Car not found"
+      });
     }
-    //update status
-    FindCar.availability=false;
+
+    // Update the availability status
+    FindCar.availability = false;
     await FindCar.save();
+
     res.status(200).json({
-      success:true,
-      msg:"Car status updated successfully"
-    })
+      success: true,
+      msg: "Car status updated successfully"
+    });
   } catch (error) {
-    console.log(error)
+    console.error("Error from Car Status removal:", error); // Improved error logging
     res.status(400).json({
-      sucess:false,
-      msg:"Error from Car Status removal"
-    })
+      success: false,
+      msg: "Error from Car Status removal",
+      error: error.message // Include the error message in the response
+    });
   }
-}
+};
 
 module.exports = { UploadCar, GetApprovedCars, GetCarById ,updateCarStatus};
