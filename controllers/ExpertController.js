@@ -288,7 +288,7 @@ const DeleteMyTask = async (req, res, next) => {
 
 //Get ALl Offers
 const GetAllOffers = async (req, res, next) => {
-  const { id } = req.params;
+  const { id } = req.params; //task id
   try {
     const offers = await Offer.find({ taskid: id });
     res.status(200).json({
@@ -380,4 +380,5 @@ module.exports = {
   GetTaskbyId,
   DeleteMyTask,
   PostOffer,
+  GetAllOffers,
 };
