@@ -325,21 +325,7 @@ const PostOffer = async (req, res, next) => {
   const { userid, taskid, price, time, distance, longitude, latitude, avatar } = req.body;
 
   try { 
-    if (
-      !userid || // == expert id
-      !taskid ||
-      !price ||
-      !time ||
-      !distance ||
-      !longitude ||
-      !latitude ||
-      !avatar // == user avatar
-    ) {
-      return res.status(400).json({
-        success: false,
-        msg: "Please fill all the fields from Post Offer",
-      });
-    }
+
 
     const offer = new Offer({
       Avatar: avatar,
