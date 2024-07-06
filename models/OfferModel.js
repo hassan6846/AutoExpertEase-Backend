@@ -3,7 +3,6 @@ const mongoose = require("mongoose");
 const OfferSchema = new mongoose.Schema({
   Avatar:{
     type: String,
-    default:"https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_1280.png"
   },
   taskid: {
     type: mongoose.Schema.Types.ObjectId,
@@ -21,16 +20,22 @@ const OfferSchema = new mongoose.Schema({
     required: true,
   },
   time: {
-    type: Number,
+    type: String,
     required: true,
   },
   distance: {
-    type: Number,
+    type: String,
     required: true,
   },
   coordinates: {
-    type: String,
-    required: true,
+    longitude:{
+      type: String,
+      required: true,
+    },
+    latitude:{
+      type: String,
+      required: true,
+    }
   },
 });
 

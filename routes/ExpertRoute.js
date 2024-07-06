@@ -2,7 +2,7 @@ const express = require('express')
 const router = express.Router()//router for nested routes
 
 //controllers
-const {ApplyExpertShip,GetTopup,AddTopup,PostTask,GetAllTasks,DeleteMyTask,SendOffertoTask,GetTaskbyId}=require("../controllers/ExpertController")
+const {ApplyExpertShip,GetTopup,AddTopup,PostTask,GetAllTasks,DeleteMyTask,GetTaskbyId,PostOffer}=require("../controllers/ExpertController")
 
 router.route("/apply-expert").post(ApplyExpertShip)
 router.route('/add-topup').post(AddTopup)
@@ -13,5 +13,5 @@ router.route('/get-tasks/:id').get(GetTaskbyId)
 router.route('/delete-task/:id').delete(DeleteMyTask)
 
 
-router.route('/sendoffer').post(SendOffertoTask)
+router.route('/sendoffer').post(PostOffer)
 module.exports = router;

@@ -185,7 +185,6 @@ const PostTask = async (req, res, next) => {
 
   // Check if any required field is missing
 
-
   try {
     // Convert base64 string to buffer and then to Data URI
     if (
@@ -251,7 +250,7 @@ const PostTask = async (req, res, next) => {
 
 const GetAllTasks = async (req, res, next) => {
   try {
-    const tasks = await Task.find({isTaskActive:true});
+    const tasks = await Task.find({ isTaskActive: true });
     res.status(200).json({
       tasks: tasks,
     });
@@ -286,40 +285,17 @@ const DeleteMyTask = async (req, res, next) => {
     });
   }
 };
-const SendOffertoTask = async (req, res, next) => {
-  const { taskid, price, coordinates, time, distance, userid } = req.body;
 
-  // Check if any required fields are missing
-  if (!taskid || !price || !coordinates || !time || !distance || !userid) {
-    return res.status(400).json({
-      success: false,
-      msg: "Missing required fields: taskid, price, coordinates, time, distance",
-    });
-  }
-
+//Get ALl Offers
+const GetAllOffers = async (req, res, next) => {
+  const { id } = req.params;
   try {
-
-    // Create a new Offer object
-    const offer = new Offer({
-      Avatar: findUserAvatar.avatar,
-      taskid,
-      userid,
-      price,
-      time,
-      distance,
-      coordinates,
+    const offers = await Offer.find({ taskid: id });
+    res.status(200).json({
+      offers: offers,
     });
-
-    // Save the offer to the database
-    await offer.save();
-
-    res.status(201).json({
-      success: true,
-      msg: "Successfully Posted Offer.",
-      offer,
-    });
-  } catch (error) {
-    console.error(error);
+  } catch (err) {
+    console.error(err);
     res.status(500).json({
       success: false,
       msg: "Internal Server Error",
@@ -327,24 +303,6 @@ const SendOffertoTask = async (req, res, next) => {
   }
 };
 
-
-//Get ALl Offers
-const GetAllOffers=async(req,res,next)=>{
-  const {id}=req.params
-  try{
-    const offers = await Offer.find({ taskid: id });
-    res.status(200).json({
-      offers: offers,
-    });
-  }
-  catch (err) {
-    console.error(err);
-    res.status(500).json({
-      success: false,
-      msg: "Internal Server Error",
-    });
-  
-}}
 const GetTaskbyId = async (req, res, next) => {
   const { id } = req.params;
   try {
@@ -361,6 +319,58 @@ const GetTaskbyId = async (req, res, next) => {
     });
   }
 };
+
+///Post oFfer
+const PostOffer = async (req, res, next) => {
+  const { userid, taskid, price, time, distance, longitude, latitude, avatar } = req.body;
+
+  try { 
+    if (
+      !userid || // == expert id
+      !taskid ||
+      !price ||
+      !time ||
+      !distance ||
+      !longitude ||
+      !latitude ||
+      !avatar // == user avatar
+    ) {
+      return res.status(400).json({
+        success: false,
+        msg: "Please fill all the fields from Post Offer",
+      });
+    }
+
+    const offer = new Offer({
+      Avatar: avatar,
+      coordinates: {
+        latitude: latitude,
+        longitude: longitude
+      },
+      distance: distance,
+      price: price,
+      time: time,
+      taskid: taskid,
+      userid: userid,
+    });
+
+    await offer.save();
+    res.status(201).json({
+      success: true,
+      msg: "Offer Posted Successfully",
+      offer: offer,
+    });
+  } catch (error) {
+    console.log(error);
+    res.status(500).json({
+      success: false,
+      msg: "Internal Server Error",
+    });
+  }
+};
+
+
+
 module.exports = {
   ApplyExpertShip,
   GetTopup,
@@ -369,5 +379,5 @@ module.exports = {
   GetAllTasks,
   GetTaskbyId,
   DeleteMyTask,
-  SendOffertoTask,
+  PostOffer,
 };
