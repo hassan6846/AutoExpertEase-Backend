@@ -1,0 +1,12 @@
+.AllProductCont {
+    width: 100%;
+    height: 90vh;
+    background-color: "orange";
+    color: red;
+}
+.product-wrapper{
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10;
+
+}

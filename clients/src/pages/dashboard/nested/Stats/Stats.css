@@ -1,0 +1,49 @@
+.statsContainer {
+    margin-top: 10px;
+    display: flex;
+    column-gap: 2px;
+}
+
+.StatsCard {
+    width: 33.33%;
+    padding: 10px;
+    border-radius: 5px;
+ 
+    min-height: 140px;
+    height: 140px auto;
+}
+
+.GraphContainer {
+    margin-top: 10px;
+    display: flex;
+    column-gap: 10px;
+}
+
+.WeeklySignupGraph {
+background-color: "#fff";
+    box-shadow: rgba(100, 100, 111, 0.2) 0px 7px 29px 0px;
+    border-radius: 5px;
+    padding: 20px;
+
+}
+
+.RecentSignups {
+    padding: 20px;
+    max-height: 400px;
+    width: 100%;
+    margin-top: 20px;
+    background-color: "#fff";
+    border-radius: 10px;
+    box-shadow: rgba(100, 100, 111, 0.2) 0px 7px 29px 0px;
+    overflow-y: scroll;
+}
+.RecentUserCard{
+    display: flex;
+    max-height: 300px;
+  
+}
+.UserCard{
+    box-shadow: rgba(100, 100, 111, 0.2) 0px 7px 29px 0px;
+    display: flex;
+    border-radius: 5px;
+}

@@ -1,0 +1,20 @@
+.UserManegmentModal {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: 'translate(-50%, -50%)';
+    transform: translate(-50%, -50%);
+    width: 300;
+    outline: none;
+    background-color: #f5f5f5;
+    border: none;
+    box-shadow: 24;
+    padding: 40px;
+    border-radius: 5px;
+}
+.ButtonContainerModal{
+    margin-top: 30px;
+    display: flex;
+    column-gap: 5px;
+    justify-content: flex-end;
+}

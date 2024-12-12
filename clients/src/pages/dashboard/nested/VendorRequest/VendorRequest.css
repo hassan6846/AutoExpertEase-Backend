@@ -1,0 +1,17 @@
+.RequestContainer{
+margin-top: 10px;
+cursor: pointer;
+}
+.RequestCard{
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    border-radius: 5px;
+    justify-content: space-between;
+    padding: 5px;
+    margin-bottom: 10px;
+}
+.TextContainerRequests{
+    display: flex;
+    align-items: center;
+}

@@ -1,0 +1,17 @@
+.ExpertReqCard{
+    display: flex;
+    
+    align-items: center;
+    justify-content: space-between;
+    border-radius: 5px;
+    justify-content: space-between;
+    padding: 5px;
+    margin-bottom: 10px;
+}
+.ExpertReqCard:hover {
+    background-color: #e0e0e0;
+  }
+.TextContainerReq{
+    display: flex;
+    align-items: center;
+}

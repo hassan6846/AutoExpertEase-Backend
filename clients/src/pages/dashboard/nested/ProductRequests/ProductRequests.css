@@ -1,0 +1,48 @@
+.ProductRequestCard {
+    background-color: #f5f5f5;
+    border-radius: 8px;
+    padding: 10px;
+    margin-bottom: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+  }
+  
+  .ProductRequestCard:hover {
+    background-color: #e0e0e0;
+  }
+  
+  .TextContainerProductRequests {
+    display: flex;
+    align-items: center;
+  }
+  
+  .ProductModal {
+    background-color: #fff;
+    width: 80%;
+    max-width: 600px;
+    margin: auto;
+    padding: 20px;
+    border-radius: 8px;
+    outline: none;
+  }
+  
+  .ProductModal img {
+    width: 100%;
+    max-height: 300px; /* Example: Limit image height */
+    object-fit: cover; /* Example: Ensure images maintain aspect ratio */
+    margin-bottom: 10px;
+    border-radius: 8px;
+  }
+  
+  .ProductModal .MuiTypography-h5 {
+    margin-bottom: 10px;
+  }
+  
+  .ProductModal .MuiButton-root {
+    margin-top: 10px;
+    margin-right: 10px;
+  }
+  
